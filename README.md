@@ -6,8 +6,8 @@ Merkle tree implementation for Leo using Poseidon
 
 To run:
 
-leo run
+`leo run`
 
 To run tests:
 
-leo test
+`leo test`

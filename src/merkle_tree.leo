@@ -1,6 +1,14 @@
 import poseidon.(Poseidon);
 
 circuit MerkleTree {
+
+    /*
+        Generates a root for a merkle tree of 8 elements
+
+        amount_of_leaves, log2_amount_of_leaves and padding
+        can be changed to work with merkle tree of different sizes
+        
+    */
     function generate_root(array: [field;8]) -> field{
 
         const amount_of_leaves: u32 = 8;

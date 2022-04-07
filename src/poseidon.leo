@@ -23,12 +23,11 @@ circuit Poseidon {
     
     */
     function poseidon_2_1(a_field: field, another_field: field) -> field {
+
+        const n_rounds_f: u32 = 8;
+        const n_rounds_p: u32 = 57;
         //t = input len + 1
         const t: u32 = 3;
-        const n_rounds_f: u32 = 8;
-        // vec![56, 57, 56, 60, 60, 63, 64, 63],
-        const n_rounds_p: u32 = 57;
-        //Field array of size t
         let state: [field;3] = [0,a_field,another_field];
 
         for i in 0..(n_rounds_f + n_rounds_p) {
@@ -242,18 +241,19 @@ circuit Poseidon {
 
         let new_state = state;
         for i in 0..3 {
-           new_state[i] += c_constants[it + i];
+           new_state[i] = new_state[i] + c_constants[it + i];
         }
         return new_state;
     }
 
     function sbox(n_rounds_f: u32, n_rounds_p: u32, state: [field;3], i: u32) -> [field;3]{
         if i < n_rounds_f / 2 || i >= n_rounds_f / 2 + n_rounds_p {
+            console.log("Full round {}", i);
             for j in 0..3 {
-                state[j] = state[j]*state[j]*state[j];
+                state[j] = state[j]*state[j]*state[j]*state[j]*state[j];
             }
         } else {
-            state[0] = state[0]*state[0]*state[0];
+            state[0] = state[0]*state[0]*state[0]*state[0]*state[0];
         }
         return state;
     }
@@ -278,12 +278,13 @@ circuit Poseidon {
                     5609355908490836216705221571195372566193589029819212913634850154812499303357
                 ]
             ];
-
+        let new_state: [field;3] = [0,0,0];
         for i in 0..3 {
             for j in 0..3 {
-                state[i] = m_constants[i][j] * state[j] + m_constants[i][j];
+                let mij: field =  m_constants[i][j] * state[j];
+                new_state[i] += mij;
             }
         }
-        return state;
+        return new_state;
     }
 }

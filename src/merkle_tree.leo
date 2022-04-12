@@ -15,7 +15,7 @@ circuit MerkleTree {
         const log2_amount_leaves: u32 = 3;
         //Computes a merkle root, that we use as a commitment
         let padding = [0field;25];
-        //We need to add some padding until else, it gets an out of bounds error 
+        //We need to add some padding else, it gets an out of bounds error 
         //Note this makes the calculation really slow, since all paths of branches
         //are "executed" in the circuit
         //TO DO: Generate a small precompiler for macros or a small program to 
@@ -72,7 +72,7 @@ circuit MerkleTreeForTest {
 
         //Computes a merkle root, that we use as a commitment
         let padding = [0field;25];
-        //We need to add some padding until else, it gets an out of bounds error 
+        //We need to add some padding else, it gets an out of bounds error 
         //Note this makes the calculation really slow, since all paths of branches
         //are "executed" in the circuit
         //TO DO: Generate a small precompiler for macros or a small program to 

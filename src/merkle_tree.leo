@@ -70,9 +70,11 @@ circuit MerkleTreeForTest {
 
         //Computes a merkle root, that we use as a commitment
         let padding = [0field;25];
-        //We need to 
-        //add some padding until the if inside the for gets fixed
-        //else, it gets an out of bounds error 
+        //We need to add some padding until else, it gets an out of bounds error 
+        //Note this makes the calculation really slow, since all paths of branches
+        //are "executed" in the circuit
+        //TO DO: Generate a small precompiler for macros or a small program to 
+        //generate an optimized version of the loops
         let array_of_leaves = [...hashed_array, ...padding];
 
         for i in 0..log2_amount_leaves {

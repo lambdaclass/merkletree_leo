@@ -55,6 +55,27 @@ circuit MerkleTreeForTest {
         return a_value+another_value;
     }
 
+    function dummy_add_hash_2_1(a_value:field, another_value:field) -> field{
+        return a_value + another_value;
+    }
+
+    function verify_proof(leave:field, proof: [field;3], path_index: [bool;3], root: field) -> bool{
+        const amount_of_leaves: u32 = 8;
+        const levels: u32 = 3;
+
+        let element = leave;
+
+        for i in 0..levels{
+            if path_index[i] {
+                element = MerkleTreeForTest::dummy_add_hash_2_1(proof[i],element);
+            } else {
+                element = MerkleTreeForTest::dummy_add_hash_2_1(element, proof[i]);
+            }
+        }
+
+        return element == root;
+    }
+
     //This is always the same code as the merkle tree, 
     //but with a dummy hash to test
     function generate_dummy_root(array: [field;8]) -> field{

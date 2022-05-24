@@ -41,6 +41,23 @@ circuit MerkleTree {
         }
         return array_of_leaves[0];
     }
+
+    function verify_proof(leave:field, proof: [field;3], path_index: [bool;3], root: field) -> bool{
+        const amount_of_leaves: u32 = 8;
+        const levels: u32 = 3;
+
+        let element = leave;
+
+        for i in 0..levels{
+            if path_index[i] {
+                element = Poseidon::poseidon_2_1(proof[i],element);
+            } else {
+                element = Poseidon::poseidon_2_1(element, proof[i]);
+            }
+        }
+
+        return element == root;
+    }
 }
 
 
